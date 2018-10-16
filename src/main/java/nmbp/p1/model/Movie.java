@@ -11,19 +11,23 @@ import java.util.regex.Pattern;
 @NamedNativeQueries({
         @NamedNativeQuery(name = "movie.insert", query = "insert into movie" +
                 "(movieid, title, categories, summary, description)" +
-                "values (:id, :t, :c, :s, :d);")
+                "values (:id, :t, :c, :s, :d);"),
+        @NamedNativeQuery(name = "search.movies",
+                query = "select title," +
+                        "   ts_headline('english', title || '\\n' || summary || '\\n' || categories || '\\n' || description, " +
+                        "       to_tsquery(:q)) as headline" +
+                        " from " +
+                        "     (select title, " +
+                        "       summary, categories, description, " +
+                        "       ts_rank(array[0.2,0.3,0.6,1.0], searchvector," +
+                        "       to_tsquery(:q), 2) as r " +
+                        "       from movie order by r desc limit 10) as ranks;")
 })
-//TODO:Upit koji se izvršava za dohvat rezultata:
-// select title, summary,
-//  ts_headline('english', title || '\n' || summary,
-//      to_tsquery('Dancing | (Legend & of & Tarzan) | (Lord & Of)'))
-//  from
-//     (select title, summary,
-//       ts_rank(array[0.2,0.3,0.6,1.0], searchvector,
-//              to_tsquery('Dancing | (Legend & of & Tarzan) | (Lord & Of)'),2) as r
-//      from movie
-//      order by r desc
-//      limit 10) as ranks;
+
+@SqlResultSetMapping(name = "search.result", classes = {
+        @ConstructorResult(targetClass = SearchResult.class,
+                columns = {@ColumnResult(name = "title"), @ColumnResult(name = "headline")})
+})
 
 @Entity
 public class Movie {

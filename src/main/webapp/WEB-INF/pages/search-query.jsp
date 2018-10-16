@@ -6,8 +6,8 @@
 <body>
 <form action="" method="post">
     <input type="text" name="query" placeholder="Enter your search"><br>
-    <input type="radio" name="operation" value="or" checked>
-    <input type="radio" name="operation" value="and">
+    <input type="radio" name="operation" value="or" checked>OR
+    <input type="radio" name="operation" value="and">AND
     <input type="submit">
 </form>
 </body>

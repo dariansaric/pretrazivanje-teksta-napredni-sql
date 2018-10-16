@@ -1,12 +1,16 @@
 package nmbp.p1.web;
 
 
+import nmbp.p1.model.SearchResult;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 /**
  * This class is a utility class used for byte-StringHex conversion in both directions.
@@ -69,7 +73,7 @@ public class Util {
                 joiner.add(q);
 
             } else {
-                StringJoiner joiner1 = new StringJoiner(" & ");
+                StringJoiner joiner1 = new StringJoiner(" & ", "(", ")");
                 Arrays.stream(q.split("\\s+")).forEach(joiner1::add);
 //            for(String s : q.split("\\s+")) {
 //                joiner1.add(s);
@@ -81,4 +85,17 @@ public class Util {
         return joiner.toString();
     }
 
+    public static List<String> prepareResults(List<SearchResult> results) {
+        List<String> headlines = results.stream().map(SearchResult::getHeadline).collect(Collectors.toList());
+        List<String> res = new LinkedList<>();
+        for (String line : headlines) {
+            String[] parts = line.split("\n");
+            for (int i = 0; i < parts.length; i++) {
+                parts[i] = "<h" + (i + 3) + ">" + parts[i] + "</h" + (i + 3) + ">";
+            }
+            res.add(String.join("<br>", parts));
+        }
+
+        return res;
+    }
 }
