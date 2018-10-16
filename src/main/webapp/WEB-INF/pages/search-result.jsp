@@ -19,7 +19,7 @@
     <input type="submit">
 </form>
 Used SQL query:<br>
-${requestScope.get("query")}<br>
+${requestScope.get("sql")}<br>
 Rezultati:<br>
 <jsp:useBean id="results" scope="request" type="java.util.List"/>
 <c:forEach var="r" items="${results}">

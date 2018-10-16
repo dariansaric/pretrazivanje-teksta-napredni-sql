@@ -45,7 +45,7 @@ public class SearchServlet extends HttpServlet {
         query = prepareTSQuery(querires, operation);
         List<SearchResult> results = DAOProvider.getDAO().getSearchResults(query);
         req.setAttribute("results", prepareResults(results));
-        req.setAttribute("sql", DAO.TFS_QUERY.replaceFirst(":q", query));
+        req.setAttribute("sql", DAO.TFS_QUERY.replaceAll(":q", query).replaceAll("\n", ""));
 
         req.getRequestDispatcher("/WEB-INF/pages/search-result.jsp").forward(req, resp);
     }
