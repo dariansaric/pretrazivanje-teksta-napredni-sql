@@ -3,13 +3,12 @@ package nmbp.p1.web;
 
 import nmbp.p1.model.SearchResult;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -18,40 +17,6 @@ import java.util.stream.Collectors;
  * @author Darian Šarić
  */
 public class Util {
-
-    /**
-     * Returns a hex number representative of the specified byte array.
-     *
-     * @param bytes byte array to be converted
-     *
-     * @return hex number in text
-     */
-    private static String bytetohex(byte[] bytes) {
-        StringBuilder builder = new StringBuilder();
-        for (byte b : bytes) {
-            builder.append(String.format("%02x", 0xFF & b));
-        }
-
-        return builder.toString();
-    }
-
-    /**
-     * Returns a String representation of a SHA-1 digest of the provided password.
-     *
-     * @param password a password
-     *
-     * @return SHA-1 digested password
-     */
-    public static String digestPassword(String password) {
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("sha-1");
-            digest.update(password.getBytes(StandardCharsets.UTF_8));
-            return Util.bytetohex(digest.digest());
-        } catch (NoSuchAlgorithmException ignored) {
-            return "";
-        }
-    }
 
     /**
      * Trims the provided string or returns an empty string if null.
@@ -100,9 +65,16 @@ public class Util {
     }
 
     public static List<String> parseForm(String form) {
-        // TODO: isparsiraj sve, pederu
+        if (form == null) return null;
+        List<String> list = new LinkedList<>();
 
+        Matcher m = Pattern.compile("\"([^\"]*)\"|(\\S+)").matcher(form);
+        while (m.find()) {
+            String arg = m.group(1) != null ?
+                    m.group(1) : m.group(2);
+            list.add(arg.replaceAll("\"", ""));
+        }
+        return list;
 
-        return null;
     }
 }
