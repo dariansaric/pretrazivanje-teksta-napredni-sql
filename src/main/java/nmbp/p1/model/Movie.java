@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 
 @Entity
 public class Movie {
-    public static final Pattern CATEGORY_PATTERN = Pattern.compile("\\w+(;\\w+)*");
+    public static final Pattern CATEGORY_PATTERN = Pattern.compile("[\\w-]+(;[\\w-]+)*");
     private int movieid;
     private String title;
     private String categories;

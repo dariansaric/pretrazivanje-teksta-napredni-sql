@@ -39,12 +39,10 @@ public class SearchServlet extends HttpServlet {
             return;
         }
 
-        //defaultna pretraga, dok ne napravim parser za query
-        List<String> querires = parseForm(query);
-//        Arrays.asList("Dancing", "Legend of Tarzan", "Lord Of Dance");
-        query = prepareTSQuery(querires, operation);
+        query = prepareTSQuery(parseForm(query), operation);
         List<SearchResult> results = DAOProvider.getDAO().getSearchResults(query);
         req.setAttribute("results", prepareResults(results));
+        // TODO: Uljepšaj ispis izvršenog SQL upita
         req.setAttribute("sql", DAO.TFS_QUERY.replaceAll(":q", query).replaceAll("\n", ""));
 
         req.getRequestDispatcher("/WEB-INF/pages/search-result.jsp").forward(req, resp);
