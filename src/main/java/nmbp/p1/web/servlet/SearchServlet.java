@@ -10,12 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static nmbp.p1.web.Util.prepareResults;
-import static nmbp.p1.web.Util.prepareTSQuery;
+import static nmbp.p1.web.Util.*;
 
 @WebServlet("/servleti/search")
 public class SearchServlet extends HttpServlet {
@@ -29,6 +27,7 @@ public class SearchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        // TODO: definiraj poruke greške za upis parametara upita
         String query = req.getParameter("query");
         if (query == null || query.isEmpty() || !query.matches(QUERY_PATTERN.pattern())) {
             resp.sendError(400, "Bad request");
@@ -41,7 +40,8 @@ public class SearchServlet extends HttpServlet {
         }
 
         //defaultna pretraga, dok ne napravim parser za query
-        List<String> querires = Arrays.asList("Dancing", "Legend of Tarzan", "Lord Of Dance");
+        List<String> querires = parseForm(query);
+//        Arrays.asList("Dancing", "Legend of Tarzan", "Lord Of Dance");
         query = prepareTSQuery(querires, operation);
         List<SearchResult> results = DAOProvider.getDAO().getSearchResults(query);
         req.setAttribute("results", prepareResults(results));

@@ -18,7 +18,6 @@ public class Inicijalizacija implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        //TODO:otkrij zasto ne radi
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("nmbp.projekt1");
         sce.getServletContext().setAttribute("emf", emf);
         JPAEMFProvider.setEmf(emf);

@@ -12,7 +12,6 @@
         <li><b>Menu</b></li>
         <ul>
             <li><a href="${pageContext.request.contextPath}/servleti/add">Add</a></li>
-            <%--TODO: napraviti ostale linkove--%>
             <li>Search</li>
             <li>Analysis</li>
         </ul>

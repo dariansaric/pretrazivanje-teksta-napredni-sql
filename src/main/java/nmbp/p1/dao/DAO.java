@@ -26,6 +26,4 @@ public interface DAO {
     void postMovie(Movie movie) throws DAOException;
 
     List<SearchResult> getSearchResults(String query) throws DAOException;
-
-    //TODO:Napisi metodu za dohvat rezultata (objekt za reprezentaciju, reprezentacija)
 }

@@ -98,4 +98,11 @@ public class Util {
 
         return res;
     }
+
+    public static List<String> parseForm(String form) {
+        // TODO: isparsiraj sve, pederu
+
+
+        return null;
+    }
 }

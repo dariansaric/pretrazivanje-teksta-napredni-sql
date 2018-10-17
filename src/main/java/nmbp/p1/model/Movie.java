@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.regex.Pattern;
 
 @NamedQueries({
-    @NamedQuery(name = "movie.get.maxid", query = "select max(movieid) from Movie")
+        @NamedQuery(name = "movie.get.maxid", query = "select max(movieid) from Movie")
 })
 @NamedNativeQueries({
         @NamedNativeQuery(name = "movie.insert", query = "insert into movie" +
