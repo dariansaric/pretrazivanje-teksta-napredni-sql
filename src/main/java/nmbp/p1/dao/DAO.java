@@ -14,8 +14,8 @@ import java.util.List;
 public interface DAO {
     String TFS_QUERY =
             "select title," +
-                    "   ts_headline('english', title || '\n<p>' || summary || '</p>\n' || categories || '\n' || description, " +
-                    "       to_tsquery(:q)) as headline, rank" +
+                    "   ts_headline('english', title || '\n' || summary || '\n' || categories || '\n' || description, " +
+                    "   to_tsquery(:q)) as headline, rank" +
                     " from " +
                     "     (select title, " +
                     "       summary, categories, description, " +
@@ -26,4 +26,6 @@ public interface DAO {
     void postMovie(Movie movie) throws DAOException;
 
     List<SearchResult> getSearchResults(String query) throws DAOException;
+
+    List<String> perfomAutocomplete(String term) throws DAOException;
 }

@@ -43,4 +43,9 @@ public class JPADAOImpl implements DAO {
         return JPAEMProvider.getEntityManager().createNativeQuery(TFS_QUERY, "search.result")
                 .setParameter("q", query).getResultList();
     }
+
+    @Override
+    public List<String> perfomAutocomplete(String term) throws DAOException {
+        return null;
+    }
 }
