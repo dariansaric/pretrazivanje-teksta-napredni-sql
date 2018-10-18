@@ -15,13 +15,13 @@ public interface DAO {
     String TFS_QUERY =
             "select title," +
                     "   ts_headline('english', title || '\n<p>' || summary || '</p>\n' || categories || '\n' || description, " +
-                    "       to_tsquery(:q)) as headline" +
+                    "       to_tsquery(:q)) as headline, rank" +
                     " from " +
                     "     (select title, " +
                     "       summary, categories, description, " +
                     "       ts_rank(array[0.2,0.3,0.6,1.0], searchvector," +
-                    "       to_tsquery(:q), 2) as r " +
-                    "       from movie order by r desc limit 10) as ranks;";
+                    "       to_tsquery(:q), 2) as rank " +
+                    "       from movie order by rank desc limit 10) as ranks;";
 
     void postMovie(Movie movie) throws DAOException;
 

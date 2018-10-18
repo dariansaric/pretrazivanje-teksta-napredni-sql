@@ -15,18 +15,20 @@ import java.util.regex.Pattern;
         @NamedNativeQuery(name = "search.movies",
                 query = "select title," +
                         "   ts_headline('english', title || '\\n' || summary || '\\n' || categories || '\\n' || description, " +
-                        "       to_tsquery(:q)) as headline" +
+                        "       to_tsquery(:q)) as headline, rank" +
                         " from " +
                         "     (select title, " +
                         "       summary, categories, description, " +
                         "       ts_rank(array[0.2,0.3,0.6,1.0], searchvector," +
-                        "       to_tsquery(:q), 2) as r " +
-                        "       from movie order by r desc limit 10) as ranks;")
+                        "       to_tsquery(:q), 2) as rank " +
+                        "       from movie order by rank desc limit 10) as ranks;")
 })
 
 @SqlResultSetMapping(name = "search.result", classes = {
         @ConstructorResult(targetClass = SearchResult.class,
-                columns = {@ColumnResult(name = "title"), @ColumnResult(name = "headline")})
+                columns = {@ColumnResult(name = "title", type = String.class),
+                        @ColumnResult(name = "headline", type = String.class),
+                        @ColumnResult(name = "rank", type = Float.class)})
 })
 
 @Entity

@@ -7,10 +7,12 @@ package nmbp.p1.model;
 public class SearchResult {
     private String title;
     private String headline;
+    private float similarity;
 
-    public SearchResult(String title, String headline) {
+    public SearchResult(String title, String headline, float similarity) {
         this.title = title;
         this.headline = headline;
+        this.similarity = similarity;
     }
 
     public String getHeadline() {
@@ -27,5 +29,13 @@ public class SearchResult {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public float getSimilarity() {
+        return similarity;
+    }
+
+    public void setSimilarity(float similarity) {
+        this.similarity = similarity;
     }
 }

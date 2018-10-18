@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * This class is a utility class used for byte-StringHex conversion in both directions.
@@ -51,13 +50,14 @@ public class Util {
     }
 
     public static List<String> prepareResults(List<SearchResult> results) {
-        List<String> headlines = results.stream().map(SearchResult::getHeadline).collect(Collectors.toList());
+//        List<String> headlines = results.stream().map(SearchResult::getHeadline).collect(Collectors.toList());
         List<String> res = new LinkedList<>();
-        for (String line : headlines) {
-            String[] parts = line.split("\n");
-            for (int i = 0; i < parts.length; i++) {
-                parts[i] = "<h" + (i + 3) + ">" + parts[i] + "</h" + (i + 3) + ">";
-            }
+        for (SearchResult r : results) {
+            String[] parts = r.getHeadline().split("\n");
+//            for (int i = 0; i < parts.length; i++) {
+//                parts[i] = "<h" + (i + 3) + ">" + parts[i] + "</h" + (i + 3) + ">";
+//            }
+            parts[0] += String.format("\t[%.5f]", r.getSimilarity());
             res.add(String.join("<br>", parts));
         }
 
