@@ -2,10 +2,12 @@ package nmbp.p1.dao.jpa;
 
 import nmbp.p1.dao.DAO;
 import nmbp.p1.dao.DAOException;
+import nmbp.p1.model.Dnevnik;
 import nmbp.p1.model.Movie;
 import nmbp.p1.model.SearchResult;
 
 import javax.persistence.EntityManager;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,9 +42,11 @@ public class JPADAOImpl implements DAO {
 //                .setParameter("q", query)
 //                .getResultStream().collect(Collectors.toList());
 
+        EntityManager entityManager = JPAEMProvider.getEntityManager();
         //noinspection unchecked
-        List<SearchResult> list = JPAEMProvider.getEntityManager().createNativeQuery(TFS_QUERY, "search.result")
+        List<SearchResult> list = entityManager.createNativeQuery(TFS_QUERY, "search.result")
                 .setParameter("q", query).getResultList();
+        entityManager.persist(new Dnevnik(query, new Timestamp(System.currentTimeMillis())));
         return list.stream()
                 .filter(s -> s.getSimilarity() > 1e-9).collect(Collectors.toList());
     }
