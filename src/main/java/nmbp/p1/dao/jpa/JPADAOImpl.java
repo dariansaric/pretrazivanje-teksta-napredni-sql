@@ -7,6 +7,7 @@ import nmbp.p1.model.SearchResult;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JPADAOImpl implements DAO {
     @Override
@@ -40,12 +41,19 @@ public class JPADAOImpl implements DAO {
 //                .getResultStream().collect(Collectors.toList());
 
         //noinspection unchecked
-        return JPAEMProvider.getEntityManager().createNativeQuery(TFS_QUERY, "search.result")
+        List<SearchResult> list = JPAEMProvider.getEntityManager().createNativeQuery(TFS_QUERY, "search.result")
                 .setParameter("q", query).getResultList();
+        return list.stream()
+                .filter(s -> s.getSimilarity() > 1e-9).collect(Collectors.toList());
     }
 
     @Override
-    public List<String> perfomAutocomplete(String term) throws DAOException {
-        return null;
+    public List<String> getSuggestions(String term) throws DAOException {
+        return JPAEMProvider.getEntityManager()
+                .createNamedQuery("autocomplete", String.class)
+                .setParameter("t", term)
+                .setMaxResults(5)
+                .getResultList();
     }
+
 }

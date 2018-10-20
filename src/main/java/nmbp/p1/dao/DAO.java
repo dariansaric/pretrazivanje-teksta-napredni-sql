@@ -19,13 +19,20 @@ public interface DAO {
                     " from " +
                     "     (select title, " +
                     "       summary, categories, description, " +
-                    "       ts_rank(array[0.2,0.3,0.6,1.0], searchvector," +
+                    "       ts_rank_cd(array[0.2,0.3,0.6,1.0], searchvector," +
                     "       to_tsquery(:q), 2) as rank " +
                     "       from movie order by rank desc limit 10) as ranks;";
+
+    String FUZZY_QUERY = "select summary," +
+            "from movie " +
+            "order by levenshtein_less_equal(lower(summary), lower(:t), length(summary) / 4), " +
+            "ts_rankcd(to_tsvector(summary), to_tsquery(:t)) desc, " +
+            "length(summary) asc, summary " +
+            "limit 5;";
 
     void postMovie(Movie movie) throws DAOException;
 
     List<SearchResult> getSearchResults(String query) throws DAOException;
 
-    List<String> perfomAutocomplete(String term) throws DAOException;
+    List<String> getSuggestions(String term) throws DAOException;
 }

@@ -17,7 +17,7 @@ import static nmbp.p1.web.Util.*;
 
 @WebServlet("/servleti/search")
 public class SearchServlet extends HttpServlet {
-    private static final Pattern QUERY_PATTERN = Pattern.compile("((\".+\")|\\w+)(\\s((\".*\")|(\\w+)))*");
+    private static final Pattern QUERY_PATTERN = Pattern.compile("((\".+\")|[\\w.]+)(\\s((\".*\")|([\\w.]+)))*");
     private static final Pattern OPERATION_PATTERN = Pattern.compile("(or)|(and)");
 
     @Override

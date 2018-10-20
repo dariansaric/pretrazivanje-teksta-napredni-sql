@@ -6,7 +6,10 @@ import javax.persistence.*;
 import java.util.regex.Pattern;
 
 @NamedQueries({
-        @NamedQuery(name = "movie.get.maxid", query = "select max(movieid) from Movie")
+        @NamedQuery(name = "movie.get.maxid", query = "select max(movieid) from Movie"),
+        @NamedQuery(name = "autocomplete",
+                query = "select summary from Movie order by similarity(summary, :t) desc, length(summary), summary"
+        )
 })
 @NamedNativeQueries({
         @NamedNativeQuery(name = "movie.insert", query = "insert into movie" +
@@ -22,14 +25,23 @@ import java.util.regex.Pattern;
                         "       ts_rank(array[0.2,0.3,0.6,1.0], searchvector," +
                         "       to_tsquery(:q), 2) as rank " +
                         "       from movie order by rank desc limit 10) as ranks;")
+//        @NamedNativeQuery(name = "autocomplete",
+//        query = "select summary " +
+//                "            from movie " +
+//                "            order by levenshtein_less_equal(lower(summary), lower(:t), length(summary) / 4), " +
+//                "            ts_rank(to_tsvector(summary), to_tsquery(:t)) desc, " +
+//                "            length(summary) asc, summary " +
+//                "            limit 5;")
 })
 
-@SqlResultSetMapping(name = "search.result", classes = {
-        @ConstructorResult(targetClass = SearchResult.class,
-                columns = {@ColumnResult(name = "title", type = String.class),
-                        @ColumnResult(name = "headline", type = String.class),
-                        @ColumnResult(name = "rank", type = Float.class)})
-})
+@SqlResultSetMappings(
+        @SqlResultSetMapping(name = "search.result", classes = {
+                @ConstructorResult(targetClass = SearchResult.class,
+                        columns = {@ColumnResult(name = "title", type = String.class),
+                                @ColumnResult(name = "headline", type = String.class),
+                                @ColumnResult(name = "rank", type = Float.class)})
+        })
+)
 
 @Entity
 public class Movie {
