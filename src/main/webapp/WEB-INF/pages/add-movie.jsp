@@ -4,7 +4,6 @@
 <html>
 <head>
     <title>Pretražianje teksta</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 <nav>
@@ -18,28 +17,39 @@
     </ul>
 </nav>
 <form action="" method="post">
-    Title: <input type="text" name="title" value="${form.title}"><br>
+    <label>
+        Title:
+        <input type="text" name="title" value="${form.title}">
+    </label><br>
     <c:if test="${form.hasError('title')}">
-        <div class="greska"><c:out value="${form.getError('title')}"/> </div>
+        <div class="greska"><c:out value="${form.getError('title')}"/></div>
     </c:if>
 
-    Summary: <input type="text" name="summary" value="${form.summary}"><br>
+    <label>
+        Summary
+        <input type="text" name="summary" value="${form.summary}">
+    </label><br>
     <c:if test="${form.hasError('summary')}">
-        <div class="greska"><c:out value="${form.getError('summary')}"/> </div>
+        <div class="greska"><c:out value="${form.getError('summary')}"/></div>
     </c:if>
 
-    Categories: <input type="text" name="categories" value="${form.categories}"><br>
+    <label>
+        Categories:
+        <input type="text" name="categories" value="${form.categories}">
+    </label><br>
     <c:if test="${form.hasError('categories')}">
-        <div class="greska"><c:out value="${form.getError('categories')}"/> </div>
+        <div class="greska"><c:out value="${form.getError('categories')}"/></div>
     </c:if>
 
-    Description:<br><textarea rows="25" cols="100" name="description" v>${form.description}</textarea><br>
+    <label>
+        Description:
+        <textarea rows="25" cols="100" name="description">${form.description}</textarea>
+    </label><br>
     <c:if test="${form.hasError('description')}">
-        <div class="greska"><c:out value="${form.getError('description')}"/> </div>
+        <div class="greska"><c:out value="${form.getError('description')}"/></div>
     </c:if>
 
     <input type="submit" value="Add">
-    <%--<input type="button" value="Cancel" onclick=""--%>
 </form>
 </body>
 </html>

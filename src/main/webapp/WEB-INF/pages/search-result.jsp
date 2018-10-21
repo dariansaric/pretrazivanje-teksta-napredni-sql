@@ -9,31 +9,20 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Title</title>
-    <link href="css/jquery-ui.css" rel="stylesheet">
-    <script src="js/jquery-1.11.2.js"/>
-    <script src="js/jquery-ui.js"/>
+    <title>Rezultati pretrage teksta</title>
+    <link href="${pageContext.request.contextPath}/css/jquery-ui.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/jquery-1.11.2.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-ui.js"></script>
     <script>
-        $(function () {
-
-            $('#search').keypress(function () {
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/servleti/Auto",
-                    type: "post",
-                    data: '',
-                    success: function (data) {
-                        $("#search").autocomplete({
-                            source: data
-                        });
-
-                    }, error: function (data, status, er) {
-                        // console.log(data + "_" + status + "_" + er);
-                    },
-
+        $(document).ready(function () {
+            $('#query').keypress(function () {
+                $('#query').autocomplete({
+                    source: "${pageContext.request.contextPath}/servleti/Auto",
+                    select: function (event, ui) {
+                        $('#query').val(ui.item.value);
+                    }
                 });
-
             });
-
         });
     </script>
 </head>
@@ -48,10 +37,14 @@
         </ul>
     </ul>
 </nav>
-<form id="search" action="${pageContext.request.contextPath}/servleti/search" method="post">
-    <input type="text" name="query" placeholder="Enter your search"><br>
-    <input type="radio" name="operation" value="or" checked>OR
-    <input type="radio" name="operation" value="and">AND
+<form action="" method="post">
+    <label for="query">Upit</label><input id="query" type="text" name="query" placeholder='npr. "Lord Of Dance" Tarzan'><br>
+    <label>OR
+        <input type="radio" name="operation" value="or" checked>
+    </label>
+    <label>AND
+        <input type="radio" name="operation" value="and">
+    </label>
     <input type="submit">
 </form>
 Used SQL query:<br>
