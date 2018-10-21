@@ -4,10 +4,14 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @NamedNativeQueries({
-        @NamedNativeQuery(name = "create.temp",
+        @NamedNativeQuery(name = "create.temp.date",
                 query = "create temp table dani (dan timestamp, t text)"),
         @NamedNativeQuery(name = "insert.date",
-                query = "insert into dani values (to_timestamp(:s, 'DDMMYYYY'), 'd' || :s);")
+                query = "insert into dani values (to_timestamp(:s, 'DDMMYYYY'), 'd' || :s)"),
+        @NamedNativeQuery(name = "create.temp.hour",
+                query = "create temp table sati (sat timestamp, t text)"),
+        @NamedNativeQuery(name = "insert.hour",
+                query = "insert into sati values (to_timestamp(:s, 'HH24'), 'h' || :s)")
 })
 @Entity
 public class Dnevnik {

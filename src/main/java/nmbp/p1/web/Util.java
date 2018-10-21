@@ -3,9 +3,12 @@ package nmbp.p1.web;
 
 import nmbp.p1.model.SearchResult;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * This class is a utility class used for byte-StringHex conversion in both directions.
@@ -13,6 +16,7 @@ import java.util.regex.Pattern;
  * @author Darian Šarić
  */
 public class Util {
+    public static final DateFormat DATE_FORMAT_DB = new SimpleDateFormat("ddMMyyyy");
 
     /**
      * Trims the provided string or returns an empty string if null.
@@ -75,9 +79,27 @@ public class Util {
 
     }
 
+    public static List<String> getDays(Date start, Date end) {
+        Set<Date> days = new LinkedHashSet<>();
+        days.add(start);
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(start);
+
+        while (calendar.getTime().before(end)) {
+            Date result = calendar.getTime();
+            days.add(result);
+            calendar.add(Calendar.DATE, 1);
+        }
+        days.add(end);
+
+        return days.stream()
+                .map(DATE_FORMAT_DB::format)
+                .collect(Collectors.toList());
+    }
+
     public static class PivotResult {
         String query;
-        Map<String, Integer> data = new LinkedHashMap<>();
+        List<Integer> data = new LinkedList<>();
 
         public PivotResult(String query) {
             this.query = query;
@@ -87,7 +109,7 @@ public class Util {
             return query;
         }
 
-        public Map<String, Integer> getData() {
+        public List<Integer> getData() {
             return data;
         }
     }
