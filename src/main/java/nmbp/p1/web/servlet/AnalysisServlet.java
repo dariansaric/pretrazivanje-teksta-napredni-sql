@@ -67,7 +67,9 @@ public class AnalysisServlet extends HttpServlet {
         request.setAttribute("results", results);
         List<String> headers;
         if (time.equals("d")) {
+
             headers = getDays(dateStart, dateEnd);
+            headers.add(0, "Upit");
         } else {
             headers = new ArrayList<>(25);
             headers.add("Upit");

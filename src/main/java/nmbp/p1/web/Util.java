@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author Darian Šarić
  */
 public class Util {
-    public static final DateFormat DATE_FORMAT_DB = new SimpleDateFormat("ddMMyyyy");
+    private static final DateFormat DATE_FORMAT_DB = new SimpleDateFormat("ddMMyyyy");
 
     /**
      * Trims the provided string or returns an empty string if null.
@@ -91,7 +91,6 @@ public class Util {
             calendar.add(Calendar.DATE, 1);
         }
         days.add(end);
-
         return days.stream()
                 .map(DATE_FORMAT_DB::format)
                 .collect(Collectors.toList());

@@ -8,38 +8,64 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Analiza pretraživanja</title>
+    <title>Napredni SQL - analiza pretraživanja</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav>
-    <ul>
-        <li><b>Menu</b></li>
-        <ul>
-            <li><a href="${pageContext.request.contextPath}/servleti/add">Add</a></li>
-            <li><a href="${pageContext.request.contextPath}/servleti/search">Search</a></li>
-            <li><a href="${pageContext.request.contextPath}/servleti/analysis">Analysis</a></li>
-        </ul>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <button class="btn btn-info" onclick="location.href='${pageContext.request.contextPath}/'">Naslovna</button>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/servleti/add'">
+                Add
+            </button>
+            <%--<a class="nav-link" href="${pageContext.request.contextPath}/servleti/add">Add</a>--%>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-primary"
+                    onclick="location.href='${pageContext.request.contextPath}/servleti/search'">Search
+            </button>
+            <%--<a class="nav-link" href="${pageContext.request.contextPath}/servleti/search">Search</a>--%>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-primary"
+                    onclick="location.href='${pageContext.request.contextPath}/servleti/analysis'">Analysis
+            </button>
+            <%--<a class="nav-link" href="${pageContext.request.contextPath}/servleti/analysis">Analysis</a>--%>
+        </li>
     </ul>
 </nav>
-<form action="" method="post">
-    <label>
-        Datum od:
-        <input type="date" name="date-start">
-    </label><br/>
-    <label>
-        Datum do:
-        <input type="date" name="date-end">
-    </label><br/>
-    Granulacija:
-    <label>
-        Dani
-        <input type="radio" name="time" value="d" checked>
-    </label>
-    <label>
-        Sati
-        <input type="radio" name="time" value="h">
-    </label>
-    <input type="submit">
-</form>
+<div class="container">
+    <h2>Analiza povijesti pretraživanja pomoću pivotiranja</h2>
+
+    <form action="" method="post">
+        <div class="form-group">
+            <label for="start">Datum od:</label>
+            <input type="date" name="date-start" id="start">
+        </div>
+        <div class="form-group">
+            <label for="end">Datum do:</label>
+            <input type="date" name="date-end" id="end">
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" value="d" name="time" checked>
+                Dani
+            </label>
+        </div>
+        <br/>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" value="h" name="time">
+                Sati
+            </label>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary">Đorđe, analiziraj</button>
+    </form>
+</div>
 </body>
 </html>
