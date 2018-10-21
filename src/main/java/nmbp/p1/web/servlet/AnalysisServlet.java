@@ -1,5 +1,8 @@
 package nmbp.p1.web.servlet;
 
+import nmbp.p1.dao.DAOProvider;
+import nmbp.p1.web.Util;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -67,7 +70,11 @@ public class AnalysisServlet extends HttpServlet {
         }
         days.add(dateEnd);
 
-        List<String> ds = days.stream().map(DATE_FORMAT_DB::format).collect(Collectors.toList());
+        List<Util.PivotResult> list =
+                DAOProvider.getDAO().getAnalysisResults(
+                        days.stream()
+                                .map(DATE_FORMAT_DB::format)
+                                .collect(Collectors.toList()));
 
 
         request.getRequestDispatcher("/WEB-INF/pages/analysis-result.jsp").forward(request, response);

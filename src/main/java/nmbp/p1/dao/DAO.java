@@ -43,5 +43,5 @@ public interface DAO {
 
     List<String> getSuggestions(String term) throws DAOException;
 
-    List<Util.PivotResult> getAnalysisResults(String someParameter) throws DAOException;
+    List<Util.PivotResult> getAnalysisResults(List<String> days) throws DAOException;
 }

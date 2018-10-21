@@ -77,7 +77,7 @@ public class Util {
 
     public static class PivotResult {
         String query;
-        Map<String, Integer> data = new HashMap<>();
+        Map<String, Integer> data = new LinkedHashMap<>();
 
         public PivotResult(String query) {
             this.query = query;
