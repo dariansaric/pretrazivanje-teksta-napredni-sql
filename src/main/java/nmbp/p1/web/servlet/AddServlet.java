@@ -17,6 +17,7 @@ public class AddServlet extends HttpServlet {
         AddForm form = new AddForm();
 
         req.setAttribute("form", form);
+        DAOProvider.getDAO().getAnalysisResults("");
 
         req.getRequestDispatcher("/WEB-INF/pages/add-movie.jsp").forward(req, resp);
     }

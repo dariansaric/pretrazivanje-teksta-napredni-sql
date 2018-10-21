@@ -3,6 +3,12 @@ package nmbp.p1.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "create.temp",
+                query = "create temp table dani (dan timestamp, t text)"),
+        @NamedNativeQuery(name = "insert.date",
+                query = "insert into dani values (to_timestamp(:s, 'DD.MM.YYYY'), :s);")
+})
 @Entity
 public class Dnevnik {
     private int id;
