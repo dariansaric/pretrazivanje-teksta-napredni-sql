@@ -7,7 +7,7 @@ import java.sql.Timestamp;
         @NamedNativeQuery(name = "create.temp",
                 query = "create temp table dani (dan timestamp, t text)"),
         @NamedNativeQuery(name = "insert.date",
-                query = "insert into dani values (to_timestamp(:s, 'DD.MM.YYYY'), :s);")
+                query = "insert into dani values (to_timestamp(:s, 'DDMMYYYY'), 'd' || :s);")
 })
 @Entity
 public class Dnevnik {

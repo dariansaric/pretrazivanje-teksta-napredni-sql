@@ -3,10 +3,7 @@ package nmbp.p1.web;
 
 import nmbp.p1.model.SearchResult;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,5 +73,22 @@ public class Util {
         }
         return list;
 
+    }
+
+    public static class PivotResult {
+        String query;
+        Map<String, Integer> data = new HashMap<>();
+
+        public PivotResult(String query) {
+            this.query = query;
+        }
+
+        public String getQuery() {
+            return query;
+        }
+
+        public Map<String, Integer> getData() {
+            return data;
+        }
     }
 }

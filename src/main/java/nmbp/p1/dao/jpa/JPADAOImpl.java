@@ -10,8 +10,9 @@ import javax.persistence.EntityManager;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
+
+import static nmbp.p1.web.Util.PivotResult;
 
 public class JPADAOImpl implements DAO {
     @Override
@@ -63,37 +64,32 @@ public class JPADAOImpl implements DAO {
     }
 
     @Override
-    public List<Map<String, Object>> getAnalysisResults(String someParameter) throws DAOException {
+    public List<PivotResult> getAnalysisResults(String someParameter) throws DAOException {
         //TODO: kasnije
         EntityManager em = JPAEMProvider.getEntityManager();
 
         em.createNamedQuery("create.temp").executeUpdate();
         //trebam funkciju koja ce vratiti Listu Stringova za datume
-        List<String> l = Arrays.asList("20.10.2018", "21.10.2018", "22.10.2018");
+        List<String> l = Arrays.asList("20102018", "21102018", "22102018");
         for (String s : l) {
             em.createNamedQuery("insert.date")
                     .setParameter("s", s)
                     .executeUpdate();
         }
 
-//        List rs = em.createQuery(DATE_PIVOT_QUERY)
-//                .setParameter("x", someParameter).getResultList();
-//        em.createQuery("").getResultList();
-
-//        List<Object[]> rs = ((Session)em.getDelegate())
-//                .createSQLQuery("")
-//                .setParameter("x", "d20102018 int, d21102018 int, d22102018 int, d13122018 int").getResultList();
-        List x = em.createNativeQuery(DATE_PIVOT_QUERY)
+        //noinspection unchecked
+        return (List<PivotResult>) em.createNativeQuery(String.format(DATE_PIVOT_QUERY, "d20102018 int, d21102018 int, d22102018 int"))
 //                .setParameter("x", "d20102018 int, d21102018 int, d22102018 int, d13122018 int")
-                .getResultList();
-//                .forEach(record -> {
-//            String x = "";
-//            int gejo = 5;
-//        });
+                .getResultStream()
+                .map(r -> {
+                    Object[] o = (Object[]) r;
+                    PivotResult result = new PivotResult((String) o[0]);
 
-        int c = 1;
-
-        return null;
+                    for (int i = 1; i < o.length; i++) {
+                        result.getData().put(String.format("d%s", l.get(i - 1)), (Integer) o[i]);
+                    }
+                    return result;
+                }).collect(Collectors.toList());
     }
 
 }

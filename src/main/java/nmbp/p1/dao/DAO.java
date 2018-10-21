@@ -3,9 +3,9 @@ package nmbp.p1.dao;
 
 import nmbp.p1.model.Movie;
 import nmbp.p1.model.SearchResult;
+import nmbp.p1.web.Util;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Sučelje prema podsustavu za perzistenciju podataka.
@@ -32,10 +32,10 @@ public interface DAO {
 //            "limit 5;";
     String DATE_FORMAT = "DD.MM.YYYY";
     String DATE_PIVOT_QUERY = "select * from " +
-            "crosstab( " +
-            "    'select upit, to_char(datum, ''DD.MM.YYYY.'') as d, count(*) as br from dnevnik " +
+            "crosstab(" +
+            "    'select upit, ''d'' || to_char(datum, ''DDMMYYYY'') as d, count(*) as br from dnevnik " +
             "group by upit, d order by upit, d','select t from dani order by dan')" +
-            "  as pivot(upit varchar(255), d20102018 int, d21102018 int, d22102018 int);";
+            "  as pivot(upit varchar(255), %s);";
 
     void postMovie(Movie movie) throws DAOException;
 
@@ -43,5 +43,5 @@ public interface DAO {
 
     List<String> getSuggestions(String term) throws DAOException;
 
-    List<Map<String, Object>> getAnalysisResults(String someParameter) throws DAOException;
+    List<Util.PivotResult> getAnalysisResults(String someParameter) throws DAOException;
 }
