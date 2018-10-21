@@ -38,6 +38,16 @@
     </script>
 </head>
 <body>
+<nav>
+    <ul>
+        <li><b>Menu</b></li>
+        <ul>
+            <li><a href="${pageContext.request.contextPath}/servleti/add">Add</a></li>
+            <li><a href="${pageContext.request.contextPath}/servleti/search">Search</a></li>
+            <li><a href="${pageContext.request.contextPath}/servleti/analysis">Analysis</a></li>
+        </ul>
+    </ul>
+</nav>
 <form id="search" action="${pageContext.request.contextPath}/servleti/search" method="post">
     <input type="text" name="query" placeholder="Enter your search"><br>
     <input type="radio" name="operation" value="or" checked>OR

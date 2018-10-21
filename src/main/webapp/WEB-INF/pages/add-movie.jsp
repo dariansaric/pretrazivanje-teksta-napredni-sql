@@ -12,8 +12,8 @@
         <li><b>Menu</b></li>
         <ul>
             <li><a href="${pageContext.request.contextPath}/servleti/add">Add</a></li>
-            <li>Search</li>
-            <li>Analysis</li>
+            <li><a href="${pageContext.request.contextPath}/servleti/search">Search</a></li>
+            <li><a href="${pageContext.request.contextPath}/servleti/analysis">Analysis</a></li>
         </ul>
     </ul>
 </nav>

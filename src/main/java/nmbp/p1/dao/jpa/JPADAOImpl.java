@@ -65,7 +65,6 @@ public class JPADAOImpl implements DAO {
 
     @Override
     public List<PivotResult> getAnalysisResults(String someParameter) throws DAOException {
-        //TODO: kasnije
         EntityManager em = JPAEMProvider.getEntityManager();
 
         em.createNamedQuery("create.temp").executeUpdate();

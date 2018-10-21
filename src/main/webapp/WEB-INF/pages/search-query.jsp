@@ -54,6 +54,16 @@
     </script>
 </head>
 <body>
+<nav>
+    <ul>
+        <li><b>Menu</b></li>
+        <ul>
+            <li><a href="${pageContext.request.contextPath}/servleti/add">Add</a></li>
+            <li><a href="${pageContext.request.contextPath}/servleti/search">Search</a></li>
+            <li><a href="${pageContext.request.contextPath}/servleti/analysis">Analysis</a></li>
+        </ul>
+    </ul>
+</nav>
 <form action="" method="post">
     <input id="query" type="text" name="query"><br>
     <input type="radio" name="operation" value="or" checked>OR
