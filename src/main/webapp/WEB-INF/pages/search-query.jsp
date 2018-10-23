@@ -49,7 +49,7 @@
 <div class="container">
     <h2>Pretraži filmove</h2>
     <form action="" method="post">
-        <input type="text" name="query" class="form-control" placeholder='npr. "Lord Of Dance" Tarzan'>
+        <input id="query" type="text" name="query" class="form-control" placeholder='npr. "Lord Of Dance" Tarzan'>
         <div class="form-check form-check-inline">
             <label class="form-check-label">
                 <input class="form-check-input" type="radio" value="or" name="operation" checked>

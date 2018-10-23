@@ -46,7 +46,7 @@
             </c:if>
         </div>
         <div class="form-group">
-            <label for="title">Naslov</label>
+            <label for="summary">Sažetak</label>
             <input type="text" id="summary" class="form-control" placeholder="Sažetak..." name="summary"
                    value="${form.summary}">
             <c:if test="${form.hasError('summary')}">
